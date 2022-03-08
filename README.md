@@ -1,11 +1,11 @@
-# Proyecto De Autenticacion Usando GraphQL Version 1
+# Proyecto De Autenticacion Usando GraphQL Version 2
 
 ### Registro
 ### Login
 ### Recuperacion De Contraseña
 ### Subida, Actualizacion Y Borrado De Avatar
 ### Busqueda De Usuarios y redireccion a este usuario
-
+### Sistema de seguidores y seguidos
 
 ## Backend //npm start
 * node 16.13.2

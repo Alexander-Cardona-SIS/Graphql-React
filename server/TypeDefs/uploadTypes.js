@@ -22,6 +22,11 @@ module.exports = gql`
         urlAvatar: String
     }
 
+    type Publish {
+        status: Boolean
+        urlFile: String
+    }
+
     input UserInput {
         name: String!
         username: String!
@@ -45,11 +50,11 @@ module.exports = gql`
     extend type Query {
         #Saludo Inicial En La Raiz
         greetings: String
-        
+
         # User
         getUser(id: ID, username: String): User
         search(search: String): [User]
-        
+
         # Follow
         isFollow(username: String!): Boolean
         getFollowers(username: String!): [User]
@@ -66,6 +71,9 @@ module.exports = gql`
         # Follow
         follow(username: String!): Boolean
         unFollow(username: String): Boolean
+
+        # Publication
+        publish(file: Upload!): Publish
 
         # Upload Files
         singleUpload(file: Upload!): SuccessMessage

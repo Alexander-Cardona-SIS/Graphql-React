@@ -3,6 +3,7 @@ const { SingleFile } = require("../Model/singleUploadModel");
 const { MultipleFile } = require("../Model/multipleUpload");
 const { User } = require("../Model/user");
 const { Follow } = require("../Model/follow");
+const { Publication } = require("../Model/publication");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { parse, join } = require("path");
@@ -83,7 +84,9 @@ module.exports = {
         getFollowersByMe: async (_, { username }) => {
             const userFound = await User.findOne({ username });
             // populate trae todos los datos de follow
-            const followersByMe = await Follow.find({ idUser: userFound._id }).populate("follow");
+            const followersByMe = await Follow.find({
+                idUser: userFound._id,
+            }).populate("follow");
             console.log(followersByMe);
             const followersByMeList = [];
             // Hacemos un for asyncrono
@@ -290,6 +293,41 @@ module.exports = {
                 return true;
             }
             return false;
+        },
+
+        // publish: (_, { file }) => userController.publish(file),
+        publish: async (_, { file }, context) => {
+            // sacamos la id del usuario del contexto extraido del token en apollo.js
+            //enviado desde el front
+            const { id } = context.user;
+            const { createReadStream, filename, mimetype } = await file;
+            // sacamos la extension del archivo
+            var { ext, name } = parse(filename);
+            const uuidNew = nanoid();
+            const fileName = `publication/${uuidNew}${ext}`;
+            const fileData = createReadStream();
+            // Ahora subimos a Amazon
+            try {
+                const result = await awsUploadImage(fileData, fileName);
+                // guardamos el link de la publicacion subida en la BD
+                const publication = new Publication({
+                    idUser: id,
+                    file: result,
+                    typeFile: mimetype.split("/")[0],
+                    createAtt: Date.now(),
+                });
+                publication.save();
+                // Retornamos status y la url de la publicacion
+                return {
+                    status: true,
+                    urlFile: result,
+                };
+            } catch (error) {
+                return {
+                    status: false,
+                    urlFile: null,
+                };
+            }
         },
     },
 };

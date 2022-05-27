@@ -103,7 +103,7 @@ module.exports = {
 
             const publications = await Publication.find()
                 .where({ idUser: user._id })
-                .sort({ createdAt: -1 })
+                .sort({ createAt: -1 })
             
             return publications;
         },
@@ -327,7 +327,7 @@ module.exports = {
                     idUser: id,
                     file: result,
                     typeFile: mimetype.split("/")[0],
-                    createAtt: Date.now(),
+                    createAt: Date.now(),
                 });
                 publication.save();
                 // Retornamos status y la url de la publicacion

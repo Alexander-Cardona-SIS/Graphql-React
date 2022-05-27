@@ -10,8 +10,8 @@ module.exports = gql`
         description: String
         password: String
         avatar: String
-        createdAt: String
-        updatedAt: String
+        createAt: String
+        updateAt: String
     }
     type Token {
         token: String
@@ -32,7 +32,7 @@ module.exports = gql`
         idUser: ID
         file: String
         typeFile: String
-        createdAt: String
+        createAt: String
     }
 
     input UserInput {

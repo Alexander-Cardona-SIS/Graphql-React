@@ -1,14 +1,16 @@
+import './RegisterForm.scss';
+
+import { useMutation } from '@apollo/client';
+import { useFormik } from 'formik';
 import React from 'react';
-import { Form, Button } from "semantic-ui-react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { toast } from "react-toastify";
-import { useMutation } from "@apollo/client";
-import { REGISTER } from "../../../gql/user";
-import "./RegisterForm.scss";
+import { toast } from 'react-toastify';
+import { Button, Form } from 'semantic-ui-react';
+import * as Yup from 'yup';
+
+import { REGISTER } from '../../../gql/user';
 
 export default function RegisterForm(props) {
-    // console.log(props);
+    //console.log("props", props);
 
     const { setShowLogin } = props;
     const [register] = useMutation(REGISTER);
@@ -22,14 +24,14 @@ export default function RegisterForm(props) {
             password: Yup.string().required("La contraseña es obligatoria").oneOf([Yup.ref("repeatPassword")], "Las contraseñas no son iguales"),
             repeatPassword: Yup.string().required("La contraseña es obligatoria").oneOf([Yup.ref("password")], "Las contraseñas no son iguales"),
         }),
-        onSubmit: async(formData) => { 
+        onSubmit: async (formData) => { 
             try {
                 const newUser = formData;
                 delete newUser.repeatPassword;
-
+                // console.log("INPUTMAOLOGINNew", newUser);
                 await register({
                     variables: {
-                        input: newUser
+                        input: newUser,
                     },
                 });
                 toast.success("Usuario registrado correctamente");

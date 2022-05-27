@@ -8,8 +8,6 @@ export const REGISTER = gql`
             username
             email
             password
-            createAt
-            updatedAt
         }
     }
 `;

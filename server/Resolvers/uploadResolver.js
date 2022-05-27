@@ -100,6 +100,7 @@ module.exports = {
     Mutation: {
         // register: (_, { input }) => userController.register(input),
         register: async (_, { input }) => {
+            console.log("INPUTREGISTERMAO", input);
             const newUser = input;
             // Convertimos a minusculas el email y username
             newUser.email = newUser.email.toLowerCase();
@@ -124,6 +125,7 @@ module.exports = {
         },
         // login: (_, { input }) => userController.login(input),
         login: async (_, { input }) => {
+            console.log("INPUTMAOLOGIN", input);
             const { email, password } = input;
             const userFound = await User.findOne({
                 email: email.toLowerCase(),

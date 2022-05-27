@@ -27,6 +27,7 @@ export default function LoginForm() {
         onSubmit: async (formData) => {
             setError("");
             try {
+                // console.log("INPUTMAOLOGIN", formData);
                 const { data } = await login({
                     variables: {
                         input: formData

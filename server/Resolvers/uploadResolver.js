@@ -96,6 +96,17 @@ module.exports = {
 
             return followersByMeList;
         },
+
+        getPublications: async (_, { username }) => {
+            const user = await User.findOne({ username });
+            if (!user) throw new Error("Usuario no encontrado.");
+
+            const publications = await Publication.find()
+                .where({ idUser: user._id })
+                .sort({ createdAt: -1 })
+            
+            return publications;
+        },
     },
     Mutation: {
         // register: (_, { input }) => userController.register(input),

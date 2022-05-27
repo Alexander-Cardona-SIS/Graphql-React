@@ -27,6 +27,14 @@ module.exports = gql`
         urlFile: String
     }
 
+    type Publication {
+        id: ID
+        idUser: ID
+        file: String
+        typeFile: String
+        createdAt: String
+    }
+
     input UserInput {
         name: String!
         username: String!
@@ -59,6 +67,9 @@ module.exports = gql`
         isFollow(username: String!): Boolean
         getFollowers(username: String!): [User]
         getFollowersByMe(username: String!): [User]
+
+        # Publications
+        getPublications(username: String!): [Publication]
     }
     extend type Mutation {
         # User

@@ -1,15 +1,30 @@
+import { useQuery } from '@apollo/client';
+import { size } from 'lodash';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import Publications from '../components/Publications';
 import Profile from '../components/User/Profile';
+import { GET_PUBLICATIONS } from '../gql/publication';
 
 export default function User() {
     const { username } = useParams();
+    const { data, loading } = useQuery(GET_PUBLICATIONS, {
+        variables: { username },
+    });
     
-    
+
+    if (loading) return null;
+    const { getPublications } = data;
+
+    const total = (size(getPublications));
+    console.log("Publications", getPublications);
+
     return (
         <>
-            <Profile username={username}/>
+            <Profile username={username} totalPublications={total}/>
+            <Publications getpublications={getPublications} />
+
         </>
-    )
+    );
 }

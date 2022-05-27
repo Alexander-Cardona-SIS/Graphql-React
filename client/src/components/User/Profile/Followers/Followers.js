@@ -9,11 +9,11 @@ import ModalBasic from '../../../Modal/ModalBasic';
 import ListUsers from '../../ListUsers';
 
 export default function Followers(props) {
-    const { username } = props;
+    const { username, totalPublications } = props;
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [childrenModal, setChildrenModal] = useState(null);
-
+    console.log("totalPublications: ",props);
     const {
         // usamos funciones de useQuery pero con alias
         data: dataFollowers,
@@ -80,7 +80,7 @@ export default function Followers(props) {
         <>
             <div className="followers">
                 <p>
-                    <span>**</span> publicaciones
+                    <span>{totalPublications}</span> publicaciones
                 </p>
                 <p className="link" onClick={openFollowers}>
                     <span>{size(getFollowers)}</span> seguidores
@@ -94,7 +94,7 @@ export default function Followers(props) {
                 setShow={setShowModal}
                 title={titleModal}
             >
-          {childrenModal}
+                {childrenModal}
             </ModalBasic>
         </>
     );

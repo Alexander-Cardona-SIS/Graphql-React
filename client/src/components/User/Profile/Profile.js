@@ -36,7 +36,7 @@ export default function Profile(props) {
 
 
     // la varianle username seria el usuario que estamos visualizando
-    const { username } = props;
+    const { username, totalPublications } = props;
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState("");
     const [childenModal, setChildrenModal] = useState(null);
@@ -111,7 +111,10 @@ export default function Profile(props) {
                         handlerModal={handlerModal}
                     ></HeaderProfile>
 
-                    <Followers username={ username } ></Followers>
+                    <Followers
+                        username={username}
+                        totalPublications={totalPublications}
+                    ></Followers>
 
                     <div className="other">
                         <p className="name">{getUser.name}</p>

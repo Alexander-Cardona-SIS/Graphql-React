@@ -25,6 +25,10 @@
 * semantic-ui-react
 
 
+# Start
+- Server: yarn start
+- Client: npm start
+
 
 Autor: "Alzheimeer" Edgar Quintero Romero
 16/02/2022

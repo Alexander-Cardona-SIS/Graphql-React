@@ -35,6 +35,13 @@ module.exports = gql`
         createAt: String
     }
 
+    type Comment {
+        idPublication: ID
+        idUser: ID
+        comment: String
+        createAt: String
+    }
+
     input UserInput {
         name: String!
         username: String!
@@ -55,6 +62,12 @@ module.exports = gql`
         siteWeb: String
         description: String
     }
+
+    input CommentInput{
+        idPublication: ID
+        comment: String
+    }
+
     extend type Query {
         #Saludo Inicial En La Raiz
         greetings: String
@@ -89,6 +102,10 @@ module.exports = gql`
         # Upload Files
         singleUpload(file: Upload!): SuccessMessage
         multipleUpload(file: [Upload]!): SuccessMessage
+
+        # Comment
+        addComment(input: CommentInput): Comment
+
     }
     type SuccessMessage {
         message: String

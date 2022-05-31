@@ -3,6 +3,7 @@ const { SingleFile } = require("../Model/singleUploadModel");
 const { MultipleFile } = require("../Model/multipleUpload");
 const { User } = require("../Model/user");
 const { Follow } = require("../Model/follow");
+const { Comment } = require("../Model/comment");
 const { Publication } = require("../Model/publication");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -103,8 +104,8 @@ module.exports = {
 
             const publications = await Publication.find()
                 .where({ idUser: user._id })
-                .sort({ createAt: -1 })
-            
+                .sort({ createAt: -1 });
+
             return publications;
         },
     },
@@ -340,6 +341,22 @@ module.exports = {
                     status: false,
                     urlFile: null,
                 };
+            }
+        },
+
+        // Comment
+        addComment: async (_, { input }, context) => {
+            console.log("comment", input, context);
+            try {
+                const comment = new Comment({
+                    idPublication: input.idPublication,
+                    idUser: context.user.id,
+                    comment: input.comment,
+                });
+                comment.save();
+                return comment;
+            } catch (error) {
+                console.log("error: ". error);
             }
         },
     },

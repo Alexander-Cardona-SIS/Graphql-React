@@ -89,6 +89,7 @@ module.exports = gql`
 
         # Like
         isLike(idPublication: ID!): Boolean
+        countLikes(idPublication: ID!): Int
     }
     extend type Mutation {
         # User

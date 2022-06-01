@@ -132,12 +132,15 @@ module.exports = {
                 console.log(error);
                 return false;
             }
+        },
 
-            const result = await Comment.find({ idPublication }).populate(
-                "idUser"
-            );
-
-            return result;
+        countLikes: async (_, { idPublication }) => {
+            try {
+                const result = await Like.countDocuments({ idPublication });
+                return result;
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
     Mutation: {

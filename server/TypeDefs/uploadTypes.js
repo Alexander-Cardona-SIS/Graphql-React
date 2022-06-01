@@ -37,7 +37,7 @@ module.exports = gql`
 
     type Comment {
         idPublication: ID
-        idUser: ID
+        idUser: User
         comment: String
         createAt: String
     }
@@ -83,6 +83,10 @@ module.exports = gql`
 
         # Publications
         getPublications(username: String!): [Publication]
+        
+        # Comments
+        getComments(idPublication: ID!): [Comment]
+
     }
     extend type Mutation {
         # User

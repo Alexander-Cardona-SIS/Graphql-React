@@ -108,6 +108,12 @@ module.exports = {
 
             return publications;
         },
+
+        getComments: async (_, { idPublication }) => {
+            const result = await Comment.find({idPublication}).populate("idUser");
+            
+            return result;
+        },
     },
     Mutation: {
         // register: (_, { input }) => userController.register(input),

@@ -63,7 +63,7 @@ module.exports = gql`
         description: String
     }
 
-    input CommentInput{
+    input CommentInput {
         idPublication: ID
         comment: String
     }
@@ -83,10 +83,12 @@ module.exports = gql`
 
         # Publications
         getPublications(username: String!): [Publication]
-        
+
         # Comments
         getComments(idPublication: ID!): [Comment]
 
+        # Like
+        isLike(idPublication: ID!): Boolean
     }
     extend type Mutation {
         # User
@@ -110,6 +112,9 @@ module.exports = gql`
         # Comment
         addComment(input: CommentInput): Comment
 
+        # Like
+        addLike(idPublication: ID!): Boolean
+        deleteLike(idPublication: ID!): Boolean
     }
     type SuccessMessage {
         message: String

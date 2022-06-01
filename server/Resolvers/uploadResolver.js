@@ -4,6 +4,7 @@ const { MultipleFile } = require("../Model/multipleUpload");
 const { User } = require("../Model/user");
 const { Follow } = require("../Model/follow");
 const { Comment } = require("../Model/comment");
+const { Like } = require("../Model/like");
 const { Publication } = require("../Model/publication");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -98,6 +99,7 @@ module.exports = {
             return followersByMeList;
         },
 
+        // Publications
         getPublications: async (_, { username }) => {
             const user = await User.findOne({ username });
             if (!user) throw new Error("Usuario no encontrado.");
@@ -109,9 +111,32 @@ module.exports = {
             return publications;
         },
 
+        // Comments
         getComments: async (_, { idPublication }) => {
-            const result = await Comment.find({idPublication}).populate("idUser");
-            
+            const result = await Comment.find({ idPublication }).populate(
+                "idUser"
+            );
+
+            return result;
+        },
+
+        // Like
+        isLike: async (_, { idPublication }, context) => {
+            try {
+                const result = await Like.findOne({ idPublication }).where({
+                    idUser: context.user.id,
+                });
+                if (!result) throw new Error("No le a dado like");
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+
+            const result = await Comment.find({ idPublication }).populate(
+                "idUser"
+            );
+
             return result;
         },
     },
@@ -352,7 +377,6 @@ module.exports = {
 
         // Comment
         addComment: async (_, { input }, context) => {
-            console.log("comment", input, context);
             try {
                 const comment = new Comment({
                     idPublication: input.idPublication,
@@ -362,7 +386,46 @@ module.exports = {
                 comment.save();
                 return comment;
             } catch (error) {
-                console.log("error: ". error);
+                console.log(error);
+            }
+        },
+
+        // Like
+        addLike: async (_, { idPublication }, context) => {
+            try {
+                const like = new Like({
+                    idPublication,
+                    idUser: context.user.id,
+                });
+                like.save();
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+        },
+        addLike: async (_, { idPublication }, context) => {
+            try {
+                const like = new Like({
+                    idPublication,
+                    idUser: context.user.id,
+                });
+                like.save();
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+        },
+        deleteLike: async (_, { idPublication }, context) => {
+            try {
+                await Like.findOneAndDelete({ idPublication }).where({
+                    idUser: context.user.id,
+                });
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
             }
         },
     },

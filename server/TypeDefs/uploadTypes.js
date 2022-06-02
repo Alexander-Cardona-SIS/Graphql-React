@@ -42,6 +42,14 @@ module.exports = gql`
         createAt: String
     }
 
+    type FeedPublication {
+        id: ID
+        idUser: User
+        file: String
+        typeFile: String
+        createAt: String
+    }
+
     input UserInput {
         name: String!
         username: String!
@@ -83,6 +91,7 @@ module.exports = gql`
 
         # Publications
         getPublications(username: String!): [Publication]
+        getPublicationsFolloweds: [FeedPublication]
 
         # Comments
         getComments(idPublication: ID!): [Comment]

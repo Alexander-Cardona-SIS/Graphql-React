@@ -111,6 +111,33 @@ module.exports = {
             return publications;
         },
 
+        getPublicationsFolloweds: async (_, {}, context) => {
+            const followeds = await Follow.find({ idUser: context.user.id }).populate(
+                "follow"
+            );
+            
+            const followedsList = [];
+            for await (const data of followeds) {
+                followedsList.push(data.follow)
+            }
+            
+            const publicationList = [];
+            for await (const data of followedsList) {
+                const publications = await Publication.find()
+                    .where({
+                        idUser: data._id
+                    })
+                    .sort({ createAt: -1 })
+                    .populate("idUser").limit(5);
+                publicationList.push(...publications);
+            }
+
+            const result = publicationList.sort((a, b) => {
+                return new Date(b.createAt) - new Date(a.createAt);
+            });
+            return result;
+        },
+
         // Comments
         getComments: async (_, { idPublication }) => {
             const result = await Comment.find({ idPublication }).populate(

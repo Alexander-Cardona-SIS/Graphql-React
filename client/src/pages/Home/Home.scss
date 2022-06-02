@@ -1,3 +1,12 @@
 @import "../../scss/index.scss";
 
 
+.home{
+    &__left{
+        padding-top: 0 !important;
+    }
+    
+    &__right{
+        padding-top: 0 !important;
+    }
+}

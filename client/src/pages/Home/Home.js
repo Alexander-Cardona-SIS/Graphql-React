@@ -4,7 +4,9 @@ import isJwtTokenExpired from 'jwt-check-expiry';
 import { useEffect } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 
+import Feed from '../../components/Home/Feed';
 import { getToken, removeToken } from '../../utils/token';
 
 export default function Home() {
@@ -25,8 +27,13 @@ export default function Home() {
 
     
     return (
-        <div>
-            <h1>Estamos En La Home</h1>
-        </div>
+        <Grid className="home">
+            <Grid.Column className="home__left" width={11}>
+                <Feed />
+            </Grid.Column>
+            <Grid.Column className="home__right" width={5}>
+                <h2>Usuarios no seguidos</h2>
+            </Grid.Column>
+        </Grid>
     )
 }

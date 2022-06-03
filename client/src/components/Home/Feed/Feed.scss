@@ -2,7 +2,8 @@
 
 .feed{
     padding-top: 50px;
-    height: calc(100vh - 48px);
+    height: 100vh;
+    width: 496.997px;
     overflow-y: scroll;
     &::-webkit-scrollbar{
         display: none;
@@ -18,7 +19,9 @@
             color: $font-dark;
 
             img{
+                
                 margin-right: 15px !important;
+                
             }
 
             span{
@@ -27,10 +30,14 @@
         }
 
         &-photo {
-            height: 600px;
+
+            background-color: #cccccc;
+            height:calc(100vh - 60px);
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            position: relative;
+           
 
             &:hover{
                 cursor: pointer;

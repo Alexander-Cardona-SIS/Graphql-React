@@ -89,7 +89,7 @@ module.exports = {
             const followersByMe = await Follow.find({
                 idUser: userFound._id,
             }).populate("follow");
-            console.log(followersByMe);
+            //console.log(followersByMe);
             const followersByMeList = [];
             // Hacemos un for asyncrono
             for await (const data of followersByMe) {
@@ -97,6 +97,24 @@ module.exports = {
             }
 
             return followersByMeList;
+        },
+
+        getNotFolloweds: async (_, { }, context) => {
+            // Traemos 50 usuarios
+            const users = await User.find().limit(50);
+            // Ahora vamos a separar los usuarios que seguimos a los que no
+            const arrayUsers = [];
+            for await (const user of users) {
+                // arrayUsers.push(user);
+                const isFind = await Follow.findOne({ idUser: context.user.id }).where("follow").equals(user._id);
+                
+                if (!isFind) {
+                    if (user._id.toString() !== context.user.id.toString()) {
+                        arrayUsers.push(user);
+                    }
+                }
+            }
+            return arrayUsers;
         },
 
         // Publications
@@ -112,23 +130,24 @@ module.exports = {
         },
 
         getPublicationsFolloweds: async (_, {}, context) => {
-            const followeds = await Follow.find({ idUser: context.user.id }).populate(
-                "follow"
-            );
-            
+            const followeds = await Follow.find({
+                idUser: context.user.id,
+            }).populate("follow");
+
             const followedsList = [];
             for await (const data of followeds) {
-                followedsList.push(data.follow)
+                followedsList.push(data.follow);
             }
-            
+
             const publicationList = [];
             for await (const data of followedsList) {
                 const publications = await Publication.find()
                     .where({
-                        idUser: data._id
+                        idUser: data._id,
                     })
                     .sort({ createAt: -1 })
-                    .populate("idUser").limit(5);
+                    .populate("idUser")
+                    .limit(5);
                 publicationList.push(...publications);
             }
 

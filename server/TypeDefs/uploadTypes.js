@@ -88,6 +88,7 @@ module.exports = gql`
         isFollow(username: String!): Boolean
         getFollowers(username: String!): [User]
         getFollowersByMe(username: String!): [User]
+        getNotFolloweds: [User]
 
         # Publications
         getPublications(username: String!): [Publication]

@@ -30,5 +30,8 @@
 - Client: npm start
 
 
+# Añado altair.agc
+- Instalar Altair en chrome e importar archivo
+
 Autor: "Alzheimeer" Edgar Quintero Romero
 16/02/2022

@@ -39,3 +39,4 @@ Autor: "Alzheimeer" Edgar Quintero Romero
 # Autores
 - Edgar Mauricio Quintero
 - Alexander Cardona
+- Juan Urbano

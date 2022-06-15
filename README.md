@@ -35,3 +35,7 @@
 
 Autor: "Alzheimeer" Edgar Quintero Romero
 16/02/2022
+
+# Autores
+- Edgar Mauricio Quintero
+- Alexander Cardona
